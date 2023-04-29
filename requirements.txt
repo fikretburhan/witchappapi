@@ -1,0 +1,10 @@
+Flask
+Flask-RESTful
+MarkupSafe
+pytz
+six
+Werkzeug
+https://download.pytorch.org/whl/cpu/torch-2.0.0%2Bcpu-cp310-cp310-linux_x86_64.whl
+easyocr
+numpy
+gunicorn
