@@ -8,7 +8,7 @@ app=Flask(__name__)
 
 @app.route('/getname')
 def home():
-    return "Flask google cloud app demo ci cd test3"
+    return "Flask google cloud app demo ci cd test4"
 
 @app.route("/getimagetext", methods=["post"])
 def getimagetext():

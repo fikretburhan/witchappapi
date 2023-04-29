@@ -25,25 +25,26 @@ def detectimagetext(file):
 
 def destructimagedata(data):
     list = []
-    try:
-        locale.setlocale(locale.LC_MONETARY, "tr_TR")
-    except:
-        return {
-            "success": False,
-            "error": "locale.setlocale(locale.LC_ALL, 'tr_TR') - error"
-        }
+    # try:
+    #     locale.setlocale(locale.LC_MONETARY, "tr_TR")
+    # except:
+    #     return {
+    #         "success": False,
+    #         "error": "locale.setlocale(locale.LC_ALL, 'tr_TR') - error"
+    #     }
 
     for i in range(len(data)):
-        try:
-            a = locale.atof(data[i][1])
-            isnumeric = isinstance(a, float)
-        except:
-            isnumeric = False
+        # try:
+        #     a = locale.atof(data[i][1])
+        #     isnumeric = isinstance(a, float)
+        # except:
+        #     isnumeric = False
         item = {
             "text": data[i][1],
             "height": int(data[i][0][2][1] - data[i][0][1][1]),
             "accuracy": data[i][2],
-            "isnumeric": isnumeric
+            #"isnumeric": isnumeric,
+            "isnumeric":False
         }
         list.append(item)
     sortedlist = sorted(list, key=lambda a: a['height'], reverse=True)
