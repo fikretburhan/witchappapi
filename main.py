@@ -1,8 +1,9 @@
 from flask import request, Flask
 from utils import prepareelasticdata
 from ocr import objectdetection
-
+import os
 import json
+
 app=Flask(__name__)
 
 @app.route('/getname')
@@ -18,5 +19,6 @@ def getimagetext():
     return resdata
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    port=os.environ.get('PORT',8080)
+    app.run(port=port)
 
