@@ -1,6 +1,7 @@
 import easyocr
 import utils
 import locale
+import re
 
 
 def detectimagetext(file):
@@ -34,17 +35,24 @@ def destructimagedata(data):
     #     }
 
     for i in range(len(data)):
+        checkIsText = re.search('[a-zA-Z]', data[i][1])
+        text = data[i][1]
+        isnumeric = False
+        if not checkIsText:
+            isnumeric = True
+            if data[i][1].__contains__(','):
+                text = data[i][1].replace(',', '.')
         # try:
         #     a = locale.atof(data[i][1])
         #     isnumeric = isinstance(a, float)
         # except:
         #     isnumeric = False
         item = {
-            "text": data[i][1],
+            "text": text,
             "height": int(data[i][0][2][1] - data[i][0][1][1]),
             "accuracy": data[i][2],
-            #"isnumeric": isnumeric,
-            "isnumeric":False
+            "isnumeric": isnumeric,
+            # "isnumeric":False
         }
         list.append(item)
     sortedlist = sorted(list, key=lambda a: a['height'], reverse=True)
@@ -57,9 +65,9 @@ def destructimagedata(data):
             textlist.append(sortedlist[i])
 
     return {
-            "numlist": numlist,
-            "textlist": textlist
-        }
+        "numlist": numlist,
+        "textlist": textlist
+    }
 
 
 def filterlist(x):
