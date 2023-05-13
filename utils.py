@@ -27,5 +27,6 @@ def prepareelasticdata(data):
         "definition": description,
         "price": data['numlist'][0]['text'] if len(data['numlist']) > 0 else 0,
         #"price": locale.atof(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
-        "createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
+        "createdate": datetime.datetime.now()
+        #"createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
     }
