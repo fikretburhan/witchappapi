@@ -6,5 +6,5 @@ six
 Werkzeug
 easyocr
 numpy
-elasticsearch
+elasticsearch==7.10.1
 gunicorn
