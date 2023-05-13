@@ -18,8 +18,8 @@ def getproducts():
     file = request.files['my_img']
     ocrresult = objectdetection.detectimagetext(file)
     elkresult = prepareelasticdata(ocrresult)
-    resdata = json.dumps(elkresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
-    res = setelkdata(resdata)
+    #resdata = json.dumps(elkresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    res = setelkdata(elkresult)
     return res
 
 def setelkdata(resdata):
