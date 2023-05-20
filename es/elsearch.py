@@ -27,13 +27,37 @@ class ElasticsearchClient_SSLConnction(object):
         return self.conn.indices.create(index='products', body=mappings)
 
     def insert_doc(self, elkdata):
-        res = self.conn.index(index="products", body=elkdata)
-        if res['result'] == 'created':
+        try:
+            res = self.conn.index(index="products", body=elkdata)
+            if res['result'] == 'created':
+                return {
+                    'success': True,
+                    'term': elkdata['definition']
+                }
+            else:
+                return {
+                    'success': False
+                },
+        except:
             return {
-                'success': True,
-                'term': elkdata['definition']
+                "success"
             }
-        else:
+
+    def get_search_data(self, searchTerm):
+        query_body = {
+            "query": {
+                "match": {
+                    "definition": searchTerm
+                }
+            }
+        }
+        try:
+            result = self.conn.search(index="products", body={"query": query_body['query']})
             return {
-                'success': False
+                "success":True,
+                "data":result}
+        except:
+            return {
+                "success":False,
+                "message":"Elastic datası getirilirken hata oluştu"
             }

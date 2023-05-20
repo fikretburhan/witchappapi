@@ -1,6 +1,8 @@
+import elasticsearch
 from flask import request, Flask
 from utils import prepareelasticdata
 from ocr import objectdetection
+import asyncio
 import os
 import json
 from es import elsearch
@@ -17,15 +19,29 @@ def home():
 def getproducts():
     file = request.files['my_img']
     ocrresult = objectdetection.detectimagetext(file)
-    elkresult = prepareelasticdata(ocrresult)
-    #resdata = json.dumps(elkresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
-    res = setelkdata(elkresult)
-    return res
+    elkdata = prepareelasticdata(ocrresult)
+    result = search_put_product(elkdata)
+    return result
+
+
+def search_put_product(elk_data):
+    # resdata = json.dumps(elkresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    insert_result = setelkdata(elk_data)
+    search_result = getelkdata(elk_data['definition'])
+    return {
+        "search_result":search_result,
+    }
+
 
 def setelkdata(resdata):
     elk_obj = elsearch.ElasticsearchClient_SSLConnction()
-    # elk_obj.create_index()
     res = elk_obj.insert_doc(resdata)
+    return res
+
+
+def getelkdata(searchTerm):
+    elk_obj = elsearch.ElasticsearchClient_SSLConnction()
+    res = elk_obj.get_search_data(searchTerm)
     return res
 
 
