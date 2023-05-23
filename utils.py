@@ -2,8 +2,7 @@ import io
 import cv2
 import numpy as np
 import datetime
-from pytz import timezone
-import locale
+import math
 
 
 def readimagefile(file):
@@ -15,8 +14,19 @@ def readimagefile(file):
     return img
 
 
+def crop_image(request):
+    image_file = request.files['my_img']
+    image = readimagefile(image_file)
+    y, x, c = image.shape
+    y_start = math.ceil(y * 0.35)
+    y_end = math.ceil(y * 0.65)
+    cropped_image = image[y_start:y_end, :, :]
+
+    return cropped_image
+
+
 def prepareelasticdata(data):
-    substring_list = ['yerli', 'üretim', 'türkiye', 'birim', 'fiyatı','kdv','dahil','fiyat']
+    substring_list = ['yerli', 'üretim', 'türkiye', 'birim', 'fiyatı', 'kdv', 'dahil', 'fiyat']
     description = ""
     for i in data['textlist']:
         text = i['text']
@@ -26,7 +36,7 @@ def prepareelasticdata(data):
     return {
         "definition": description,
         "price": float(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
-        #"price": locale.atof(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
+        # "price": locale.atof(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
         "createdate": datetime.datetime.now()
-        #"createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
+        # "createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
     }

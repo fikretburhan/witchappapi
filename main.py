@@ -1,8 +1,7 @@
-import elasticsearch
 from flask import request, Flask
+import utils
 from utils import prepareelasticdata
 from ocr import objectdetection
-import asyncio
 import os
 import json
 from es import elsearch
@@ -12,16 +11,20 @@ app = Flask(__name__)
 
 @app.route('/getname')
 def home():
-    return "Flask google cloud app demo ci cd test4"
+    #return "Flask google cloud app demo ci cd test4"
+    data={
+        "message":"Flask google cloud app demo ci cd test4"
+    }
+    return json.dumps(data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 @app.route("/getproducts", methods=["post"])
 def getproducts():
-    file = request.files['my_img']
-    ocrresult = objectdetection.detectimagetext(file)
+    img=utils.crop_image(request)
+    ocrresult = objectdetection.detectimagetext(img)
     elkdata = prepareelasticdata(ocrresult)
     result = search_put_product(elkdata)
-    return result
+    return json.dumps(result, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 def search_put_product(elk_data):

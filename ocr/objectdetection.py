@@ -4,14 +4,14 @@ import locale
 import re
 
 
-def detectimagetext(file):
-    try:
-        img = utils.readimagefile(file)
-    except:
-        return {
-            "success": False,
-            "error": "read image file error"
-        }
+def detectimagetext(img):
+    # try:
+    #     img = utils.readimagefile(file)
+    # except:
+    #     return {
+    #         "success": False,
+    #         "error": "read image file error"
+    #     }
     try:
         reader = easyocr.Reader(['en', 'tr'])
         result = reader.readtext(img)
