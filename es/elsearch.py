@@ -1,4 +1,4 @@
-from elasticsearch import Elasticsearch, AsyncElasticsearch
+from elasticsearch import AsyncElasticsearch
 import asyncio
 
 

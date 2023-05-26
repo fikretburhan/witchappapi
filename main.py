@@ -8,12 +8,10 @@ from es import elsearch
 import asyncio
 
 app = Flask(__name__)
-from elasticsearch import AsyncElasticsearch
 
 
 @app.route('/getname')
 def home():
-    # return "Flask google cloud app demo ci cd test4"
     data = {
         "message": "Flask google cloud app demo ci cd test4"
     }
