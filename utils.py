@@ -28,15 +28,21 @@ def crop_image(request):
 def prepareelasticdata(data):
     substring_list = ['yerli', 'üretim', 'türkiye', 'birim', 'fiyatı', 'kdv', 'dahil', 'fiyat']
     description = ""
+    price=0
+    pricetext=""
     for i in data['textlist']:
         text = i['text']
         res = any(map(text.lower().__contains__, substring_list))
         if not res:
             description += ' ' + text
+    try:
+        price=float(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0
+    except:
+        pricetext=data['numlist'][0]['text']
     return {
         "definition": description,
-        "price": float(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
-        # "price": locale.atof(data['numlist'][0]['text']) if len(data['numlist']) > 0 else 0,
+        "price":price,
+        "pricetext":pricetext,
         "createdate": datetime.datetime.now()
         # "createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
     }

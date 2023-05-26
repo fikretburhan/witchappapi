@@ -1,13 +1,14 @@
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, AsyncElasticsearch
+import asyncio
+
 
 class ElasticsearchClient_SSLConnction(object):
     def __init__(self):
         url = "https://elasticsearch-124023-0.cloudclusters.net"
         port = 10105
-        conn = Elasticsearch(
+        conn = AsyncElasticsearch(
             ['{}:{}'.format(url, port)],
             verify_certs=True,
-            # provide a path to CA certs on local
             ca_certs='es/ca_certificate.pem',
             http_auth=("elastic", "dJhwA7pE")
         )
@@ -26,38 +27,23 @@ class ElasticsearchClient_SSLConnction(object):
 
         return self.conn.indices.create(index='products', body=mappings)
 
-    def insert_doc(self, elkdata):
-        try:
-            res = self.conn.index(index="products", body=elkdata)
-            if res['result'] == 'created':
-                return {
-                    'success': True,
-                    'term': elkdata['definition']
-                }
-            else:
-                return {
-                    'success': False
-                },
-        except:
-            return {
-                "success"
-            }
-
-    def get_search_data(self, searchTerm):
+    async def insert_get_doc(self, elk_data):
         query_body = {
             "query": {
                 "match": {
-                    "definition": searchTerm
+                    "definition": elk_data['definition']
                 }
             }
         }
         try:
-            result = self.conn.search(index="products", body={"query": query_body['query']})
+            asyncio.create_task(self.conn.index(index="products", body=elk_data))
+            data = await self.conn.search(index="products", body={"query": query_body['query']})
             return {
-                "success":True,
-                "data":result}
+                "data": data,
+                "success": True
+            }
         except:
             return {
-                "success":False,
-                "message":"Elastic datası getirilirken hata oluştu"
+                "success": False,
+                "message": "elastic operation error"
             }
