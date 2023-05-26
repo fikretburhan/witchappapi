@@ -1,4 +1,6 @@
+import elasticsearch
 from elasticsearch import AsyncElasticsearch
+import elasticsearch
 import asyncio
 
 
@@ -6,7 +8,7 @@ class ElasticsearchClient_SSLConnction(object):
     def __init__(self):
         url = "https://elasticsearch-124023-0.cloudclusters.net"
         port = 10105
-        conn = AsyncElasticsearch(
+        conn = elasticsearch.AsyncElasticsearch(
             ['{}:{}'.format(url, port)],
             verify_certs=True,
             ca_certs='es/ca_certificate.pem',
