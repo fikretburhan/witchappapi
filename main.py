@@ -5,7 +5,7 @@ from ocr import objectdetection
 import os
 import json
 from es import elsearch
-import asyncio
+#import asyncio
 
 app = Flask(__name__)
 
@@ -24,7 +24,8 @@ def getproducts():
     ocrresult = objectdetection.detectimagetext(img)
     elkdata = prepareelasticdata(ocrresult)
     elk_obj = elsearch.ElasticsearchClient_SSLConnction()
-    result = asyncio.run(elk_obj.insert_get_doc(elkdata))
+    #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
+    result = elk_obj.insert_get_doc(elkdata)
     return json.dumps(result, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
