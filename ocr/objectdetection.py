@@ -13,7 +13,7 @@ def detectimagetext(img):
     #         "error": "read image file error"
     #     }
     try:
-        reader = easyocr.Reader(['en', 'tr'])
+        reader = easyocr.Reader(['en', 'tr'],gpu=True)
         result = reader.readtext(img)
     except:
         return {
