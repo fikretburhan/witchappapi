@@ -6,6 +6,7 @@ import os
 import json
 from es import elsearch
 #import asyncio
+from decimal import Decimal
 
 app = Flask(__name__)
 
@@ -20,13 +21,18 @@ def home():
 
 @app.route("/getproducts", methods=["post"])
 def getproducts():
-    img = utils.crop_image(request)
+    image_file=request.files['my_img']
+    # geolocation={
+    #     "longitude":Decimal(request.form["longitude"]),
+    #     "latitude":Decimal(request.form["latitude"]),
+    # }
+    img = utils.crop_image(image_file)
     ocrresult = objectdetection.detectimagetext(img)
-    elkdata = prepareelasticdata(ocrresult)
-    elk_obj = elsearch.ElasticsearchClient_SSLConnction()
+    elkdata = prepareelasticdata(ocrresult,[])
+    #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
-    result = elk_obj.insert_get_doc(elkdata)
-    return json.dumps(result, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    #result = elk_obj.insert_get_doc(elkdata)
+    return json.dumps(elkdata, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 

@@ -14,8 +14,7 @@ def readimagefile(file):
     return img
 
 
-def crop_image(request):
-    image_file = request.files['my_img']
+def crop_image(image_file):
     image = readimagefile(image_file)
     y, x, c = image.shape
     y_start = math.ceil(y * 0.35)
@@ -25,7 +24,7 @@ def crop_image(request):
     return cropped_image
 
 
-def prepareelasticdata(data):
+def prepareelasticdata(data,geolocation):
     substring_list = ['yerli', 'üretim', 'türkiye', 'birim', 'fiyatı', 'kdv', 'dahil', 'fiyat']
     description = ""
     price=0
@@ -43,6 +42,7 @@ def prepareelasticdata(data):
         "definition": description,
         "price":price,
         "pricetext":pricetext,
-        "createdate": datetime.datetime.now()
+        "createdate": datetime.datetime.now(),
+        "geolocation":geolocation
         # "createdate": datetime.datetime.now(tz=timezone("Europe/Istanbul"))
     }
