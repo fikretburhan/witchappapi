@@ -15,10 +15,10 @@ def detectimagetext(img):
     try:
         reader = easyocr.Reader(['en', 'tr'],gpu=True)
         result = reader.readtext(img)
-    except:
+    except Exception as error:
         return {
             "success": False,
-            "error": "easyocr error"
+            "error": error
         }
     destructeddata = destructimagedata(result)
     return destructeddata
