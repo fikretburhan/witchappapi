@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/getname')
 def home():
     data = {
-        "message": "Flask google cloud app demo ci cd test4"
+        "message": "Flask google cloud app exception test"
     }
     return json.dumps(data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
