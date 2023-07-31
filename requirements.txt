@@ -6,6 +6,5 @@ six
 Werkzeug
 easyocr
 numpy
-pillow=9.5.0
 elasticsearch==7.10.1
 gunicorn

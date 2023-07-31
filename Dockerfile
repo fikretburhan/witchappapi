@@ -13,7 +13,8 @@ COPY . ./
 ENV PIP_ROOT_USER_ACTION=ignore
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip uninstall pillow
+RUN pip install pillow==9.5.0
 #locale
 #FROM debian:latest
 #RUN apt-get update
