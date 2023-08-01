@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/getname')
 def home():
     data = {
-        "message": "Flask google cloud app exception test"
+        "message": "Flask ubuntu app ocrresult test"
     }
     return json.dumps(data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
@@ -27,12 +27,12 @@ def getproducts():
     #     "latitude":Decimal(request.form["latitude"]),
     # }
     img = utils.crop_image(image_file)
-    #ocrresult = objectdetection.detectimagetext(img)
+    ocrresult = objectdetection.detectimagetext(img)
     #elkdata = prepareelasticdata(ocrresult,[])
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
-    return json.dumps({"size":img.size,"shape":img.shape}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    return json.dumps(ocrresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 
