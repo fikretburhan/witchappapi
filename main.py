@@ -7,17 +7,16 @@ import json
 from es import elsearch
 #import asyncio
 from decimal import Decimal
-
+import logging
 app = Flask(__name__)
 
 
 @app.route('/getname')
 def home():
     data = {
-        "message": "Flask ubuntu app ocrresult test"
+        "message": "Flask ubuntu app ocrresult success test"
     }
     return json.dumps(data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
-
 
 @app.route("/getproducts", methods=["post"])
 def getproducts():
@@ -32,10 +31,8 @@ def getproducts():
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
-    ocr_check=""
-    if ocrresult:
-        ocr_check="ocr çalıştı"
-    return json.dumps(ocr_check, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+
+    return json.dumps(ocrresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 

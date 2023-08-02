@@ -4,7 +4,6 @@ import easyocr
 import utils
 import locale
 import re
-import logging
 
 def detectimagetext(img):
     try:
@@ -17,7 +16,10 @@ def detectimagetext(img):
         }
     #destructeddata = destructimagedata(result)
     #return destructeddata
-    return result
+    return {
+        "success":True,
+        "result":result
+    }
 
 
 def destructimagedata(data):
