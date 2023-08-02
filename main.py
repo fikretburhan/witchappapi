@@ -32,7 +32,10 @@ def getproducts():
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
-    return json.dumps(ocrresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    ocr_check=""
+    if ocrresult:
+        ocr_check="ocr çalıştı"
+    return json.dumps(ocr_check, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 
