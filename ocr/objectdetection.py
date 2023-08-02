@@ -15,7 +15,7 @@ def detectimagetext(img):
             "success": False,
             "error": error
         }
-    destructeddata = destructimagedata(result)
+    #destructeddata = destructimagedata(result)
     #return destructeddata
     return result
 
