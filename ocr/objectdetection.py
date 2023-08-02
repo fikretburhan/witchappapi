@@ -1,17 +1,12 @@
+import json
+
 import easyocr
 import utils
 import locale
 import re
-
+import logging
 
 def detectimagetext(img):
-    # try:
-    #     img = utils.readimagefile(file)
-    # except:
-    #     return {
-    #         "success": False,
-    #         "error": "read image file error"
-    #     }
     try:
         reader = easyocr.Reader(['en', 'tr'],gpu=True)
         result = reader.readtext(img)
@@ -21,18 +16,12 @@ def detectimagetext(img):
             "error": error
         }
     destructeddata = destructimagedata(result)
-    return destructeddata
+    #return destructeddata
+    return result
 
 
 def destructimagedata(data):
     list = []
-    # try:
-    #     locale.setlocale(locale.LC_MONETARY, "tr_TR")
-    # except:
-    #     return {
-    #         "success": False,
-    #         "error": "locale.setlocale(locale.LC_ALL, 'tr_TR') - error"
-    #     }
 
     for i in range(len(data)):
         checkIsText = re.search('[a-zA-Z]', data[i][1])
