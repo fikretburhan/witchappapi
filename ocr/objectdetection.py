@@ -14,11 +14,10 @@ def detectimagetext(img):
             "success": False,
             "error": error
         }
-    #destructeddata = destructimagedata(result)
-    #return destructeddata
+    destructeddata = destructimagedata(result)
     return {
         "success":True,
-        "result":result
+        "result":destructeddata
     }
 
 

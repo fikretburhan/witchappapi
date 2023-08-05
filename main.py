@@ -26,13 +26,17 @@ def getproducts():
     #     "latitude":Decimal(request.form["latitude"]),
     # }
     img = utils.crop_image(image_file)
-    ocrresult = objectdetection.detectimagetext(img)
+    img_obj={
+        "img_size":img.size,
+        "img_shape":img.shape
+    }
+    #ocr_result = objectdetection.detectimagetext(img)
     #elkdata = prepareelasticdata(ocrresult,[])
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
 
-    return json.dumps(ocrresult, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    return json.dumps(img_obj, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 
