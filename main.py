@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/getname')
 def home():
     data = {
-        "message": "Flask ubuntu app easyocr result test"
+        "message": "Flask ubuntu app packages updated"
     }
     return json.dumps(data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
