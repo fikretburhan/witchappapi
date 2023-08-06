@@ -7,7 +7,7 @@ import re
 
 def detectimagetext(img):
     try:
-        reader = easyocr.Reader(['en', 'tr'],gpu=True)
+        reader = easyocr.Reader(['en', 'tr'],gpu=False)
         result = reader.readtext(img)
     except Exception as error:
         return {
