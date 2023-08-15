@@ -4,7 +4,8 @@ import easyocr
 import utils
 import locale
 import re
-
+import os
+os.environ['TORCH_NNPACK'] = '0'
 def detectimagetext(img):
     try:
         reader = easyocr.Reader(['en', 'tr'],gpu=True)

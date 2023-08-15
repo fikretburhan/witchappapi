@@ -2,8 +2,9 @@ from flask import request, Flask
 import utils
 from utils import prepareelasticdata
 from ocr import objectdetection
-import os
 import json
+import os
+os.environ['TORCH_NNPACK'] = '0'
 from es import elsearch
 #import asyncio
 from decimal import Decimal
