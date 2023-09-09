@@ -1,68 +1,49 @@
-import json
-
 import easyocr
-import utils
-import locale
 import re
-import os
-os.environ['TORCH_NNPACK'] = '0'
-def detectimagetext(img):
+
+def detect_image_text(img):
     try:
-        reader = easyocr.Reader(['en', 'tr'],gpu=True)
+        reader = easyocr.Reader(['en', 'tr'], gpu=True)
         result = reader.readtext(img)
     except Exception as error:
         return {
             "success": False,
             "error": error
         }
-    destructed_data = destructimagedata(result)
+    destructed_data = destruct_image_data(result)
     return {
-        "success":True,
-        "result":destructed_data
+        "success": True,
+        "result": destructed_data
     }
-
-
-def destructimagedata(data):
+def destruct_image_data(data):
     list = []
 
     for i in range(len(data)):
-        checkIsText = re.search('[a-zA-Z]', data[i][1])
+        check_Is_Text = re.search('[a-zA-Z]', data[i][1])
         text = data[i][1]
-        isnumeric = False
-        if not checkIsText:
-            isnumeric = True
+        is_numeric = False
+        if not check_Is_Text:
+            is_numeric = True
             if data[i][1].__contains__(','):
                 text = data[i][1].replace(',', '.')
-        # try:
-        #     a = locale.atof(data[i][1])
-        #     isnumeric = isinstance(a, float)
-        # except:
-        #     isnumeric = False
         item = {
             "text": text,
             "height": int(data[i][0][2][1] - data[i][0][1][1]),
             "accuracy": data[i][2],
-            "isnumeric": isnumeric,
-            # "isnumeric":False
+            "is_numeric": is_numeric,
         }
         list.append(item)
-    sortedlist = sorted(list, key=lambda a: a['height'], reverse=True)
-    numlist = []
-    textlist = []
-    for i in range(len(sortedlist)):
-        if sortedlist[i]['isnumeric']:
-            numlist.append(sortedlist[i])
+    sorted_list = sorted(list, key=lambda a: a['height'], reverse=True)
+    num_list = []
+    text_list = []
+    for i in range(len(sorted_list)):
+        if sorted_list[i]['is_numeric']:
+            num_list.append(sorted_list[i])
         else:
-            textlist.append(sortedlist[i])
+            text_list.append(sorted_list[i])
 
     return {
-        "numlist": numlist,
-        "textlist": textlist
+        "num_list": num_list,
+        "text_list": text_list
     }
 
-
-def filterlist(x):
-    if x['isnumeric']:
-        return True
-    else:
-        return False

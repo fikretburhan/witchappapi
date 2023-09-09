@@ -1,10 +1,9 @@
 from flask import request, Flask
 import utils
-from utils import prepareelasticdata
+from utils import prepare_elastic_data
 from ocr import objectdetection
 import json
 import os
-os.environ['TORCH_NNPACK'] = '0'
 from es import elsearch
 #import asyncio
 from decimal import Decimal
@@ -27,8 +26,8 @@ def getproducts():
     #     "latitude":Decimal(request.form["latitude"]),
     # }
     img = utils.crop_image(image_file)
-    ocr_result = objectdetection.detectimagetext(img)
-    #elkdata = prepareelasticdata(ocrresult,[])
+    ocr_result = objectdetection.detect_image_text(img)
+    #elkdata = prepare_elastic_data(ocrresult,[])
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
