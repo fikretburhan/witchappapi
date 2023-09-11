@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import datetime
 import math
-
+from PIL import Image
 
 def read_image_file(file):
     in_memory_file = io.BytesIO()
@@ -16,12 +16,14 @@ def read_image_file(file):
 
 def crop_image(image_file):
     image = read_image_file(image_file)
-    np.resize(image,(200,200))
     y, x, c = image.shape
     y_start = math.ceil(y * 0.35)
     y_end = math.ceil(y * 0.65)
     cropped_image = image[y_start:y_end, :, :]
-    return cropped_image
+    resized_image = cv2.resize(cropped_image, (550,230),interpolation=cv2.INTER_AREA)
+    # img_show=Image.fromarray(resized_image,"RGB")
+    # img_show.show()
+    return resized_image
 
 
 def prepare_elastic_data(data,geolocation):

@@ -8,8 +8,9 @@ from es import elsearch
 #import asyncio
 from decimal import Decimal
 import logging
+import cv2
 app = Flask(__name__)
-
+import numpy as np
 
 @app.route('/getname')
 def home():
