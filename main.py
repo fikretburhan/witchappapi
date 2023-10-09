@@ -28,13 +28,12 @@ def getproducts():
     # }
     img = utils.crop_image(image_file)
     ocr_result = objectdetection.detect_image_text(img)
-    #elkdata = prepare_elastic_data(ocrresult,[])
+    elk_data = prepare_elastic_data(ocr_result,[])
     #elk_obj = elsearch.ElasticsearchClient_SSLConnction()
     #result = asyncio.run(elk_obj.insert_get_doc(elkdata))
     #result = elk_obj.insert_get_doc(elkdata)
 
-    return json.dumps(ocr_result, indent=4, sort_keys=True, default=str, ensure_ascii=False)
-
+    return json.dumps(elk_data, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 if __name__ == '__main__':
